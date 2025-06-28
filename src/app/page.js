@@ -697,16 +697,16 @@ const Sprite = ({ sprite, isSelected, onSelect, onMove, stageWidth, stageHeight 
     setStageRect(null);
   };
 
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
-  }, [isDragging, stageRect, dragStart]);
+useEffect(() => {
+  if (isDragging) {
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }
+}, [isDragging, stageRect, dragStart, handleMouseMove, handleMouseUp]);
 
   return (
     <motion.div
@@ -990,13 +990,21 @@ function ScratchCloneMain() {
   const playbackRef = useRef(null);
 
   // Calculate stage dimensions to be half of screen width
-  const stageWidth = Math.min(window.innerWidth * 0.5, 600); // Half screen width, max 600px
-  const stageHeight = Math.min(stageWidth * 0.75, 450); // Maintain aspect ratio
+ const [stageWidth, setStageWidth] = useState(600); // Default value
+const [stageHeight, setStageHeight] = useState(450); // Default value
 
-  const addDebugLog = (message) => {
-    const timestamp = new Date().toLocaleTimeString();
-    setDebugLogs(prev => [...prev.slice(-4), `[${timestamp}] ${message}`]);
-  };
+useEffect(() => {
+  if (typeof window !== 'undefined') {
+    const width = Math.min(window.innerWidth * 0.5, 600);
+    const height = Math.min(width * 0.75, 450);
+    setStageWidth(width);
+    setStageHeight(height);
+  }
+}, []);
+  const addDebugLog = useCallback((message) => {
+  const timestamp = new Date().toLocaleTimeString();
+  setDebugLogs(prev => [...prev.slice(-4), `[${timestamp}] ${message}`]);
+}, []);
 
   const availableSprites = [
     { name: 'Cat', emoji: '🐱', color: 'from-orange-400 to-red-500' },

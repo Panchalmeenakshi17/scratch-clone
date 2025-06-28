@@ -103,8 +103,8 @@ export default function SpriteCanvas({
         const newY = sprite.y + Math.sin(radians) * steps
         
         // Keep sprite within canvas bounds
-        const boundedX = Math.max(0, Math.min(canvasRef.current?.clientWidth - 60 || 400, newX))
-        const boundedY = Math.max(0, Math.min(canvasRef.current?.clientHeight - 60 || 300, newY))
+const boundedX = Math.max(0, Math.min(canvasRef.current?.clientWidth - 60 || 400, newX))
+const boundedY = Math.max(0, Math.min(canvasRef.current?.clientHeight - 60 || 300, newY))
         
         onSpriteUpdate(sprite.id, { x: boundedX, y: boundedY })
         break
@@ -144,90 +144,93 @@ export default function SpriteCanvas({
   }
 
   // Animation loop
-  const animate = (currentTime) => {
-    if (!isPlaying) return
+const animate = useCallback(
+  (currentTime) => {
+    if (!isPlaying) return;
 
     sprites.forEach(sprite => {
-      if (sprite.animations.length === 0) return
+      if (sprite.animations.length === 0) return;
 
-      const state = spriteStates[sprite.id]
-      if (!state) return
+      const state = spriteStates[sprite.id];
+      if (!state) return;
 
-      const currentAnimation = sprite.animations[state.currentAnimationIndex]
-      if (!currentAnimation) return
+      const currentAnimation = sprite.animations[state.currentAnimationIndex];
+      if (!currentAnimation) return;
 
       // Handle repeat animation
       if (currentAnimation.type === 'repeat') {
-        const times = currentAnimation.values?.times || 10
-        
+        const times = currentAnimation.values?.times || 10;
+
         if (state.repeatCount < times) {
           // Execute all other animations in sequence
           sprite.animations.forEach((anim, index) => {
             if (anim.type !== 'repeat') {
-              executeAnimation(sprite, anim, currentTime)
+              executeAnimation(sprite, anim, currentTime);
             }
-          })
-          
+          });
+
           setSpriteStates(prev => ({
             ...prev,
-            [sprite.id]: { ...prev[sprite.id], repeatCount: state.repeatCount + 1 }
-          }))
+            [sprite.id]: { ...prev[sprite.id], repeatCount: state.repeatCount + 1 },
+          }));
         }
       } else {
         // Execute current animation
-        executeAnimation(sprite, currentAnimation, currentTime)
-        
+        executeAnimation(sprite, currentAnimation, currentTime);
+
         // Move to next animation
         setSpriteStates(prev => ({
           ...prev,
           [sprite.id]: {
             ...prev[sprite.id],
-            currentAnimationIndex: (state.currentAnimationIndex + 1) % sprite.animations.length
-          }
-        }))
+            currentAnimationIndex: (state.currentAnimationIndex + 1) % sprite.animations.length,
+          },
+        }));
       }
-    })
+    });
 
     // Check for collisions
     for (let i = 0; i < sprites.length; i++) {
       for (let j = i + 1; j < sprites.length; j++) {
         if (checkCollision(sprites[i], sprites[j])) {
-          handleCollision(sprites[i].id, sprites[j].id)
+          handleCollision(sprites[i].id, sprites[j].id);
         }
       }
     }
 
-    animationRef.current = requestAnimationFrame(animate)
-  }
+    animationRef.current = requestAnimationFrame(animate);
+  },
+  [isPlaying, sprites, spriteStates, executeAnimation, handleCollision]
+);
 
   // Start/stop animation
-  useEffect(() => {
-    if (isPlaying) {
-      // Reset sprite states when starting
-      const resetStates = {}
-      sprites.forEach(sprite => {
-        resetStates[sprite.id] = {
-          currentAnimationIndex: 0,
-          repeatCount: 0,
-          isAnimating: true,
-          animationStartTime: performance.now()
-        }
-      })
-      setSpriteStates(resetStates)
-      
-      animationRef.current = requestAnimationFrame(animate)
-    } else {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
-    }
+ useEffect(() => {
+  if (isPlaying) {
+    // Reset sprite states when starting
+    const resetStates = {};
+    sprites.forEach(sprite => {
+      resetStates[sprite.id] = {
+        currentAnimationIndex: 0,
+        repeatCount: 0,
+        isAnimating: true,
+        animationStartTime: typeof performance !== 'undefined' ? performance.now() : 0,
+      };
+    });
+    setSpriteStates(resetStates);
 
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
+    animationRef.current = requestAnimationFrame(animate);
+  } else {
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
     }
-  }, [isPlaying, sprites])
+  }
+
+  return () => {
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+  };
+}, [isPlaying, sprites, animate]);
 
   return (
     <div className="p-4">
