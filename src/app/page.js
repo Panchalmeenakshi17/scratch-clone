@@ -234,24 +234,24 @@ const DroppedActionBlock = ({ action, index, onRemove, isPlaying }) => {
       initial={{ opacity: 0, x: -20, scale: 0.8 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 20, scale: 0.8 }}
-      className={`bg-gradient-to-r ${getBlockColor(action)} text-white px-5 py-4 rounded-2xl text-sm font-medium flex items-center justify-between shadow-lg mb-3 border border-white/20 backdrop-blur-sm`}
+      className={`bg-gradient-to-r ${getBlockColor(action)} text-white px-3 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-medium flex items-center justify-between shadow-lg mb-2 sm:mb-3 border border-white/20 backdrop-blur-sm`}
       whileHover={{ scale: 1.02, y: -2 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         <motion.div 
-          className="text-xs bg-white/20 rounded-full w-7 h-7 flex items-center justify-center font-bold shadow-sm"
+          className="text-xs bg-white/20 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center font-bold shadow-sm flex-shrink-0"
           whileHover={{ rotate: 360 }}
           transition={{ duration: 0.5 }}
         >
           {index + 1}
         </motion.div>
-        <div className="flex flex-col">
-          <span className="drop-shadow-sm">{getActionDisplay(action)}</span>
+        <div className="flex flex-col min-w-0 flex-1">
+          <span className="drop-shadow-sm truncate">{getActionDisplay(action)}</span>
           {action.type === 'repeat' && (
             <div className="text-xs opacity-80 mt-1">
               {action.actions.map((subAction, i) => (
-                <div key={i} className="ml-2">
+                <div key={i} className="ml-2 truncate">
                   • {getActionDisplay(subAction)}
                 </div>
               ))}
@@ -262,7 +262,7 @@ const DroppedActionBlock = ({ action, index, onRemove, isPlaying }) => {
       <motion.button
         onClick={() => onRemove(index)}
         disabled={isPlaying}
-        className="text-white/80 hover:text-red-200 disabled:opacity-50 text-lg leading-none ml-3 w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-500/20 transition-all"
+        className="text-white/80 hover:text-red-200 disabled:opacity-50 text-lg leading-none ml-2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-500/20 transition-all flex-shrink-0"
         whileHover={{ scale: 1.1, rotate: 90 }}
         whileTap={{ scale: 0.9 }}
       >
@@ -272,7 +272,7 @@ const DroppedActionBlock = ({ action, index, onRemove, isPlaying }) => {
   );
 };
 
-// Enhanced Motion Blocks Component with Repeat
+// Enhanced Motion Blocks Component with Repeat - Mobile Optimized
 const MotionBlocks = ({ isPlaying }) => {
   const [customSteps, setCustomSteps] = useState(10);
   const [customDegrees, setCustomDegrees] = useState(90);
@@ -293,7 +293,7 @@ const MotionBlocks = ({ isPlaying }) => {
           type="number"
           value={customSteps}
           onChange={(e) => setCustomSteps(parseInt(e.target.value) || 0)}
-          className="w-14 text-xs bg-white/90 border border-blue-200 rounded-lg px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 backdrop-blur-sm"
+          className="w-12 sm:w-14 text-xs bg-white/90 border border-blue-200 rounded-lg px-1 sm:px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 backdrop-blur-sm"
           disabled={isPlaying}
           onClick={(e) => e.stopPropagation()}
         />
@@ -311,7 +311,7 @@ const MotionBlocks = ({ isPlaying }) => {
           type="number"
           value={customDegrees}
           onChange={(e) => setCustomDegrees(parseInt(e.target.value) || 0)}
-          className="w-14 text-xs bg-white/90 border border-blue-200 rounded-lg px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 backdrop-blur-sm"
+          className="w-12 sm:w-14 text-xs bg-white/90 border border-blue-200 rounded-lg px-1 sm:px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 backdrop-blur-sm"
           disabled={isPlaying}
           onClick={(e) => e.stopPropagation()}
         />
@@ -330,7 +330,7 @@ const MotionBlocks = ({ isPlaying }) => {
             type="number"
             value={customX}
             onChange={(e) => setCustomX(parseInt(e.target.value) || 0)}
-            className="w-12 text-xs bg-white/90 border border-blue-200 rounded-lg px-1 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="w-10 sm:w-12 text-xs bg-white/90 border border-blue-200 rounded-lg px-1 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
             disabled={isPlaying}
             placeholder="X"
           />
@@ -338,7 +338,7 @@ const MotionBlocks = ({ isPlaying }) => {
             type="number"
             value={customY}
             onChange={(e) => setCustomY(parseInt(e.target.value) || 0)}
-            className="w-12 text-xs bg-white/90 border border-blue-200 rounded-lg px-1 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="w-10 sm:w-12 text-xs bg-white/90 border border-blue-200 rounded-lg px-1 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
             disabled={isPlaying}
             placeholder="Y"
           />
@@ -357,7 +357,7 @@ const MotionBlocks = ({ isPlaying }) => {
           type="number"
           value={repeatTimes}
           onChange={(e) => setRepeatTimes(parseInt(e.target.value) || 1)}
-          className="w-14 text-xs bg-white/90 border border-orange-200 rounded-lg px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300 backdrop-blur-sm"
+          className="w-12 sm:w-14 text-xs bg-white/90 border border-orange-200 rounded-lg px-1 sm:px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300 backdrop-blur-sm"
           disabled={isPlaying}
           onClick={(e) => e.stopPropagation()}
           min="1"
@@ -367,7 +367,7 @@ const MotionBlocks = ({ isPlaying }) => {
   ];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {motionBlocks.map((block, index) => (
         <DraggableBlock key={block.id} block={block} isPlaying={isPlaying}>
           <motion.div
@@ -376,16 +376,16 @@ const MotionBlocks = ({ isPlaying }) => {
             transition={{ delay: index * 0.05 }}
             className={`bg-gradient-to-r ${block.gradient} ${
               isPlaying ? 'opacity-50' : 'hover:shadow-xl active:scale-95'
-            } text-white px-4 py-3 rounded-2xl text-sm font-medium w-full transition-all duration-300 flex items-center gap-3 shadow-lg border border-white/20 backdrop-blur-sm`}
+            } text-white px-3 sm:px-4 py-2 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-medium w-full transition-all duration-300 flex items-center gap-2 sm:gap-3 shadow-lg border border-white/20 backdrop-blur-sm`}
             whileHover={isPlaying ? {} : { scale: 1.02, y: -2 }}
             whileTap={isPlaying ? {} : { scale: 0.98 }}
           >
-            <span className="text-lg">{block.icon}</span>
-            <div className="flex flex-col gap-1 flex-1">
-              <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-base sm:text-lg flex-shrink-0">{block.icon}</span>
+            <div className="flex flex-col gap-1 flex-1 min-w-0">
+              <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                 <span className="drop-shadow-sm">{block.label}</span>
                 {block.customInput}
-                {block.subLabel && <span className="text-xs opacity-90 drop-shadow-sm">{block.subLabel}</span>}
+                {block.subLabel && <span className="text-xs opacity-90 drop-shadow-sm hidden sm:inline">{block.subLabel}</span>}
               </div>
             </div>
           </motion.div>
@@ -395,7 +395,7 @@ const MotionBlocks = ({ isPlaying }) => {
   );
 };
 
-// Looks Blocks Component
+// Looks Blocks Component - Mobile Optimized
 const LooksBlocks = ({ isPlaying }) => {
   const [sayText, setSayText] = useState('Hello!');
   const [saySeconds, setSaySeconds] = useState(2);
@@ -410,26 +410,26 @@ const LooksBlocks = ({ isPlaying }) => {
       icon: '💬',
       action: { type: 'sayFor', text: sayText, seconds: saySeconds },
       customInput: (
-        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-1 sm:gap-2 flex-wrap" onClick={(e) => e.stopPropagation()}>
           <input
             type="text"
             value={sayText}
             onChange={(e) => setSayText(e.target.value)}
-            className="w-20 text-xs bg-white/90 border border-purple-200 rounded-lg px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300 backdrop-blur-sm"
+            className="w-16 sm:w-20 text-xs bg-white/90 border border-purple-200 rounded-lg px-1 sm:px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300 backdrop-blur-sm"
             disabled={isPlaying}
             placeholder="text"
           />
-          <span className="text-xs opacity-80">for</span>
+          <span className="text-xs opacity-80 hidden sm:inline">for</span>
           <input
             type="number"
             value={saySeconds}
             onChange={(e) => setSaySeconds(parseFloat(e.target.value) || 1)}
-            className="w-12 text-xs bg-white/90 border border-purple-200 rounded-lg px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300"
+            className="w-10 sm:w-12 text-xs bg-white/90 border border-purple-200 rounded-lg px-1 sm:px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300"
             disabled={isPlaying}
             min="0.1"
             step="0.1"
           />
-          <span className="text-xs opacity-80">sec</span>
+          <span className="text-xs opacity-80">s</span>
         </div>
       )
     },
@@ -440,33 +440,33 @@ const LooksBlocks = ({ isPlaying }) => {
       icon: '💭',
       action: { type: 'thinkFor', text: thinkText, seconds: thinkSeconds },
       customInput: (
-        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-1 sm:gap-2 flex-wrap" onClick={(e) => e.stopPropagation()}>
           <input
             type="text"
             value={thinkText}
             onChange={(e) => setThinkText(e.target.value)}
-            className="w-20 text-xs bg-white/90 border border-purple-200 rounded-lg px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300 backdrop-blur-sm"
+            className="w-16 sm:w-20 text-xs bg-white/90 border border-purple-200 rounded-lg px-1 sm:px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300 backdrop-blur-sm"
             disabled={isPlaying}
             placeholder="text"
           />
-          <span className="text-xs opacity-80">for</span>
+          <span className="text-xs opacity-80 hidden sm:inline">for</span>
           <input
             type="number"
             value={thinkSeconds}
             onChange={(e) => setThinkSeconds(parseFloat(e.target.value) || 1)}
-            className="w-12 text-xs bg-white/90 border border-purple-200 rounded-lg px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300"
+            className="w-10 sm:w-12 text-xs bg-white/90 border border-purple-200 rounded-lg px-1 sm:px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300"
             disabled={isPlaying}
             min="0.1"
             step="0.1"
           />
-          <span className="text-xs opacity-80">sec</span>
+          <span className="text-xs opacity-80">s</span>
         </div>
       )
     }
   ];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {looksBlocks.map((block, index) => (
         <DraggableBlock key={block.id} block={block} isPlaying={isPlaying}>
           <motion.div
@@ -475,13 +475,13 @@ const LooksBlocks = ({ isPlaying }) => {
             transition={{ delay: index * 0.05 }}
             className={`bg-gradient-to-r ${block.gradient} ${
               isPlaying ? 'opacity-50' : 'hover:shadow-xl active:scale-95'
-            } text-white px-4 py-3 rounded-2xl text-sm font-medium w-full transition-all duration-300 flex items-center gap-3 shadow-lg border border-white/20 backdrop-blur-sm`}
+            } text-white px-3 sm:px-4 py-2 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-medium w-full transition-all duration-300 flex items-center gap-2 sm:gap-3 shadow-lg border border-white/20 backdrop-blur-sm`}
             whileHover={isPlaying ? {} : { scale: 1.02, y: -2 }}
             whileTap={isPlaying ? {} : { scale: 0.98 }}
           >
-            <span className="text-lg">{block.icon}</span>
-            <div className="flex flex-col gap-1 flex-1">
-              <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-base sm:text-lg flex-shrink-0">{block.icon}</span>
+            <div className="flex flex-col gap-1 flex-1 min-w-0">
+              <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                 <span className="drop-shadow-sm">{block.label}</span>
                 {block.customInput}
               </div>
@@ -493,7 +493,7 @@ const LooksBlocks = ({ isPlaying }) => {
   );
 };
 
-// Enhanced Code Area with Repeat Support
+// Enhanced Code Area with Repeat Support - Mobile Optimized
 const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRemoveAction, onClearAllActions, isPlaying }) => {
   const selectedSprite = sprites.find(s => s.id === selectedSpriteId);
   const actions = spriteActions[selectedSpriteId] || [];
@@ -523,12 +523,12 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
 
   if (!selectedSpriteId) {
     return (
-      <div className="text-center py-20">
+      <div className="text-center py-10 sm:py-20">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          className="text-8xl mb-6"
+          className="text-4xl sm:text-8xl mb-4 sm:mb-6"
         >
           🎯
         </motion.div>
@@ -536,7 +536,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4"
+          className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2 sm:mb-4"
         >
           Select a Sprite to Start Coding
         </motion.div>
@@ -544,7 +544,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-gray-500"
+          className="text-sm sm:text-base text-gray-500 px-4"
         >
           Choose a sprite from the library to begin your creative journey
         </motion.div>
@@ -553,10 +553,10 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <motion.h4 
-          className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
+          className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
         >
@@ -566,7 +566,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
           <motion.button
             onClick={() => onClearAllActions(selectedSpriteId)}
             disabled={isPlaying}
-            className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-4 py-2 rounded-xl font-medium shadow-lg transition-all duration-300"
+            className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-3 sm:px-4 py-2 rounded-xl font-medium shadow-lg transition-all duration-300 text-sm"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, scale: 0 }}
@@ -579,7 +579,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
       
       <div
         ref={drop}
-        className={`min-h-96 p-8 rounded-3xl border-2 border-dashed transition-all duration-300 ${
+        className={`min-h-64 sm:min-h-96 p-4 sm:p-8 rounded-2xl sm:rounded-3xl border-2 border-dashed transition-all duration-300 ${
           isOver 
             ? 'border-blue-400 bg-gradient-to-br from-blue-50 to-purple-50 shadow-2xl scale-105' 
             : actions.length === 0
@@ -589,12 +589,12 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
       >
         {actions.length === 0 ? (
           <motion.div 
-            className="flex flex-col items-center justify-center h-full text-gray-400 py-20"
+            className="flex flex-col items-center justify-center h-full text-gray-400 py-10 sm:py-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
             <motion.div 
-              className="text-8xl mb-6"
+              className="text-4xl sm:text-8xl mb-4 sm:mb-6"
               animate={{ 
                 rotate: [0, -10, 10, -10, 0]
               }}
@@ -607,7 +607,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
               📝
             </motion.div>
             <motion.div 
-              className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent"
+              className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -615,7 +615,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
               Drag Blocks Here to Code
             </motion.div>
             <motion.div 
-              className="text-lg text-center"
+              className="text-sm sm:text-lg text-center px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -626,16 +626,16 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
             </motion.div>
           </motion.div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             <motion.div 
-              className="text-lg text-gray-600 mb-6 font-medium flex items-center gap-3"
+              className="text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6 font-medium flex items-center gap-2 sm:gap-3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
-              <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+              <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold">
                 {actions.length}
               </span>
-              <span>action{actions.length !== 1 ? 's' : ''} queued for execution</span>
+              <span className="text-xs sm:text-sm">action{actions.length !== 1 ? 's' : ''} queued for execution</span>
             </motion.div>
             <AnimatePresence>
               {actions.map((action, index) => (
@@ -655,7 +655,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
   );
 };
 
-// Fixed Sprite Component (no multi-keyframe animations) with Boundary Restrictions
+// Fixed Sprite Component (no multi-keyframe animations) with Boundary Restrictions - Mobile Optimized
 const Sprite = ({ sprite, isSelected, onSelect, onMove, stageWidth, stageHeight }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -683,12 +683,43 @@ const Sprite = ({ sprite, isSelected, onSelect, onMove, stageWidth, stageHeight 
     onSelect(sprite.id);
   };
 
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    let stageElement = e.currentTarget.parentElement;
+    while (stageElement && !stageElement.classList.contains('stage-container')) {
+      stageElement = stageElement.parentElement;
+    }
+    
+    if (stageElement && e.touches[0]) {
+      const rect = stageElement.getBoundingClientRect();
+      setStageRect(rect);
+      setDragStart({
+        x: e.touches[0].clientX - rect.left - sprite.x,
+        y: e.touches[0].clientY - rect.top - sprite.y
+      });
+    }
+    
+    setIsDragging(true);
+    onSelect(sprite.id);
+  };
+
   const handleMouseMove = (e) => {
     if (!isDragging || !stageRect) return;
     
     // Strict boundary enforcement - sprites cannot go outside stage boundaries
-    const x = Math.max(30, Math.min(stageWidth - 30, e.clientX - stageRect.left - dragStart.x));
-    const y = Math.max(30, Math.min(stageHeight - 30, e.clientY - stageRect.top - dragStart.y));
+    const x = Math.max(25, Math.min(stageWidth - 25, e.clientX - stageRect.left - dragStart.x));
+    const y = Math.max(25, Math.min(stageHeight - 25, e.clientY - stageRect.top - dragStart.y));
+    onMove(sprite.id, x, y);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging || !stageRect || !e.touches[0]) return;
+    
+    e.preventDefault();
+    const x = Math.max(25, Math.min(stageWidth - 25, e.touches[0].clientX - stageRect.left - dragStart.x));
+    const y = Math.max(25, Math.min(stageHeight - 25, e.touches[0].clientY - stageRect.top - dragStart.y));
     onMove(sprite.id, x, y);
   };
 
@@ -697,28 +728,34 @@ const Sprite = ({ sprite, isSelected, onSelect, onMove, stageWidth, stageHeight 
     setStageRect(null);
   };
 
-useEffect(() => {
-  if (isDragging) {
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }
-}, [isDragging, stageRect, dragStart, handleMouseMove, handleMouseUp]);
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('touchend', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('touchend', handleMouseUp);
+      };
+    }
+  }, [isDragging, stageRect, dragStart]);
+
+  const spriteSize = Math.min(stageWidth, stageHeight) < 400 ? 20 : 25;
 
   return (
     <motion.div
       style={{
         position: 'absolute',
-        left: sprite.x - 25,
-        top: sprite.y - 25,
+        left: sprite.x - spriteSize,
+        top: sprite.y - spriteSize,
         cursor: 'pointer',
         zIndex: isSelected ? 10 : 1
       }}
       animate={{
-        scale: sprite.hasCollided ? 1.3 : sprite.size, // Fixed: single keyframe instead of [1, 1.3, 1]
+        scale: sprite.hasCollided ? 1.3 : sprite.size,
         rotate: sprite.rotation
       }}
       transition={{ 
@@ -728,11 +765,12 @@ useEffect(() => {
         damping: 30
       }}
       onMouseDown={handleMouseDown}
-      className={`select-none ${isSelected ? 'ring-4 ring-blue-400 rounded-full bg-blue-100/50' : ''} p-2`}
+      onTouchStart={handleTouchStart}
+      className={`select-none ${isSelected ? 'ring-2 sm:ring-4 ring-blue-400 rounded-full bg-blue-100/50' : ''} p-1 sm:p-2`}
       whileHover={{ scale: sprite.size * 1.1 }}
       whileTap={{ scale: sprite.size * 0.95 }}
     >
-      <div className="text-5xl drop-shadow-2xl filter hover:brightness-110 transition-all">
+      <div className={`${stageWidth < 400 ? 'text-3xl' : 'text-4xl sm:text-5xl'} drop-shadow-2xl filter hover:brightness-110 transition-all`}>
         {ANIMALS_LIST[sprite.name] || '🎯'}
       </div>
       {sprite.speech && (
@@ -740,7 +778,7 @@ useEffect(() => {
           initial={{ opacity: 0, scale: 0.5, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 10 }}
-          className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 text-sm rounded-2xl whitespace-nowrap shadow-2xl border backdrop-blur-sm ${
+          className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 sm:mb-3 px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm rounded-xl sm:rounded-2xl whitespace-nowrap shadow-2xl border backdrop-blur-sm max-w-32 sm:max-w-none ${
             sprite.speechType === 'think' 
               ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white border-blue-300' 
               : 'bg-gradient-to-r from-white to-blue-50 text-gray-800 border-gray-200'
@@ -757,21 +795,21 @@ useEffect(() => {
   );
 };
 
-// Stage Component - Now takes half screen width with strict boundaries
+// Stage Component - Responsive with dynamic sizing
 const Stage = ({ sprites, selectedSpriteId, onSpriteSelect, onSpriteMove, stageWidth, stageHeight }) => {
   return (
     <div 
-      className="stage-container relative w-full h-full bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 border-4 border-blue-300 rounded-3xl overflow-hidden shadow-2xl"
+      className="stage-container relative w-full h-full bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 border-2 sm:border-4 border-blue-300 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
       style={{ width: stageWidth, height: stageHeight, minWidth: stageWidth, minHeight: stageHeight }}
     >
       {/* Stage boundary indicator */}
-      <div className="absolute inset-2 border-2 border-dashed border-blue-300/50 rounded-xl pointer-events-none"></div>
+      <div className="absolute inset-1 sm:inset-2 border-1 sm:border-2 border-dashed border-blue-300/50 rounded-lg sm:rounded-xl pointer-events-none"></div>
       
       {/* Animated background pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-4 left-4 w-8 h-8 bg-yellow-300 rounded-full animate-bounce"></div>
-        <div className="absolute top-8 right-8 w-6 h-6 bg-pink-300 rounded-full animate-ping"></div>
-        <div className="absolute bottom-6 left-8 w-4 h-4 bg-green-300 rounded-full animate-pulse"></div>
+        <div className="absolute top-2 sm:top-4 left-2 sm:left-4 w-4 sm:w-8 h-4 sm:h-8 bg-yellow-300 rounded-full animate-bounce"></div>
+        <div className="absolute top-4 sm:top-8 right-4 sm:right-8 w-3 sm:w-6 h-3 sm:h-6 bg-pink-300 rounded-full animate-ping"></div>
+        <div className="absolute bottom-3 sm:bottom-6 left-4 sm:left-8 w-2 sm:w-4 h-2 sm:h-4 bg-green-300 rounded-full animate-pulse"></div>
       </div>
       
       <AnimatePresence>
@@ -791,7 +829,7 @@ const Stage = ({ sprites, selectedSpriteId, onSpriteSelect, onSpriteMove, stageW
   );
 };
 
-// Enhanced Playback Controls
+// Enhanced Playback Controls - Mobile Optimized
 const PlaybackControls = ({ 
   onPlay, 
   onPause, 
@@ -809,31 +847,31 @@ const PlaybackControls = ({
   const hasAnyActions = Object.values(spriteActions).some(actions => actions?.length > 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Play Mode Toggle */}
       <motion.div 
-        className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-4 shadow-lg"
+        className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-lg"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <label className="flex items-center gap-4 text-sm cursor-pointer">
+        <label className="flex items-center gap-3 sm:gap-4 text-sm cursor-pointer">
           <input
             type="checkbox"
             checked={playForAll}
             onChange={(e) => setPlayForAll(e.target.checked)}
             disabled={isPlaying}
-            className="w-5 h-5 text-blue-600 rounded-lg focus:ring-blue-500 focus:ring-2"
+            className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded-lg focus:ring-blue-500 focus:ring-2"
           />
-          <span className="text-gray-700 font-semibold text-base">🎭 Play All Sprites</span>
+          <span className="text-gray-700 font-semibold text-sm sm:text-base">🎭 Play All Sprites</span>
         </label>
       </motion.div>
 
       {/* Playback Buttons */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
         <motion.button
           onClick={onPlay}
           disabled={isPlaying || (!playForAll && !hasActions) || (playForAll && !hasAnyActions)}
-          className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-300 disabled:to-gray-400 disabled:text-gray-500 text-white px-4 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg"
+          className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-300 disabled:to-gray-400 disabled:text-gray-500 text-white px-2 sm:px-4 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1 sm:gap-2 transition-all duration-300 shadow-lg"
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: 20 }}
@@ -843,15 +881,15 @@ const PlaybackControls = ({
           {isPlaying ? (
             <>
               <motion.div 
-                className="w-3 h-3 bg-white rounded-full"
+                className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full"
                 animate={{ scale: [1, 1.5, 1] }}
                 transition={{ duration: 1, repeat: Infinity }}
               ></motion.div>
-              Playing
+              <span className="hidden sm:inline">Playing</span>
             </>
           ) : (
             <>
-              ▶️ Play
+              ▶️ <span className="hidden sm:inline">Play</span>
             </>
           )}
         </motion.button>
@@ -859,38 +897,38 @@ const PlaybackControls = ({
         <motion.button
           onClick={onPause}
           disabled={!isPlaying}
-          className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 disabled:from-gray-300 disabled:to-gray-400 disabled:text-gray-500 text-white px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 shadow-lg"
+          className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 disabled:from-gray-300 disabled:to-gray-400 disabled:text-gray-500 text-white px-2 sm:px-4 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg"
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          ⏸️ Pause
+          ⏸️ <span className="hidden sm:inline">Pause</span>
         </motion.button>
         
         <motion.button
           onClick={onStop}
           disabled={!isPlaying}
-          className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-300 disabled:to-gray-400 disabled:text-gray-500 text-white px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 shadow-lg"
+          className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-300 disabled:to-gray-400 disabled:text-gray-500 text-white px-2 sm:px-4 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg"
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          ⏹️ Stop
+          ⏹️ <span className="hidden sm:inline">Stop</span>
         </motion.button>
       </div>
 
       {/* Hero Feature Info */}
       <motion.div 
-        className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-5 shadow-lg"
+        className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-lg"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 20 }}
       >
-        <div className="text-sm text-orange-700 mb-2 font-bold flex items-center gap-2">
+        <div className="text-xs sm:text-sm text-orange-700 mb-2 font-bold flex items-center gap-2">
           ⭐ HERO FEATURE: Animation Swap on Collision
         </div>
         <div className="text-xs text-orange-600">
@@ -901,18 +939,18 @@ const PlaybackControls = ({
       {/* Selected Sprite Info */}
       {selectedSprite && (
         <motion.div 
-          className="bg-gradient-to-r from-white to-blue-50 border-2 border-gray-200 rounded-2xl p-5 shadow-lg"
+          className="bg-gradient-to-r from-white to-blue-50 border-2 border-gray-200 rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-lg"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <div className="text-sm text-gray-600 mb-3 font-medium">Selected Sprite</div>
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-gray-800 font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 font-medium">Selected Sprite</div>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <span className="text-gray-800 font-bold text-lg sm:text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 {selectedSprite.name}
               </span>
-              <div className="text-sm text-gray-500 mt-1">
+              <div className="text-xs sm:text-sm text-gray-500 mt-1">
                 <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
                   {spriteActions[selectedSpriteId]?.length || 0} actions queued
                 </span>
@@ -921,7 +959,7 @@ const PlaybackControls = ({
             <motion.button
               onClick={() => onRemoveSprite(selectedSpriteId)}
               disabled={isPlaying}
-              className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-4 py-2 rounded-xl font-medium shadow-lg transition-all duration-300"
+              className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-3 sm:px-4 py-2 rounded-xl font-medium shadow-lg transition-all duration-300 text-xs sm:text-sm flex-shrink-0"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -933,7 +971,7 @@ const PlaybackControls = ({
       
       {/* Status Info */}
       <motion.div 
-        className="text-sm bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-4 border border-gray-200 shadow-sm"
+        className="text-xs sm:text-sm bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
@@ -977,7 +1015,7 @@ const useCollisionDetection = (sprites, onCollision) => {
   }, [sprites, onCollision]);
 };
 
-// Main Component
+// Main Component - Fully Responsive
 function ScratchCloneMain() {
   const [sprites, setSprites] = useState([]);
   const [selectedSpriteId, setSelectedSpriteId] = useState(null);
@@ -985,26 +1023,51 @@ function ScratchCloneMain() {
   const [spriteActionQueues, setSpriteActionQueues] = useState({});
   const [currentlyExecutingActions, setCurrentlyExecutingActions] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playForAll, setPlayForAll] = useState(true); // Default to play all for Hero Feature demo
+  const [playForAll, setPlayForAll] = useState(true);
   const [debugLogs, setDebugLogs] = useState([]);
   const playbackRef = useRef(null);
 
-  // Calculate stage dimensions to be half of screen width
- const [stageWidth, setStageWidth] = useState(600); // Default value
-const [stageHeight, setStageHeight] = useState(450); // Default value
+  // Calculate stage dimensions responsively
+  const [stageWidth, setStageWidth] = useState(300);
+  const [stageHeight, setStageHeight] = useState(225);
+  const [isMobile, setIsMobile] = useState(false);
 
-useEffect(() => {
-  if (typeof window !== 'undefined') {
-    const width = Math.min(window.innerWidth * 0.5, 600);
-    const height = Math.min(width * 0.75, 450);
-    setStageWidth(width);
-    setStageHeight(height);
-  }
-}, []);
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (typeof window !== 'undefined') {
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        
+        setIsMobile(screenWidth < 768);
+        
+        // Responsive stage sizing
+        let width, height;
+        
+        if (screenWidth < 640) { // Mobile
+          width = Math.min(screenWidth - 40, 300);
+          height = width * 0.75;
+        } else if (screenWidth < 1024) { // Tablet
+          width = Math.min(screenWidth * 0.4, 400);
+          height = width * 0.75;
+        } else { // Desktop
+          width = Math.min(screenWidth * 0.45, 600);
+          height = width * 0.75;
+        }
+        
+        setStageWidth(Math.max(width, 250));
+        setStageHeight(Math.max(height, 187));
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   const addDebugLog = useCallback((message) => {
-  const timestamp = new Date().toLocaleTimeString();
-  setDebugLogs(prev => [...prev.slice(-4), `[${timestamp}] ${message}`]);
-}, []);
+    const timestamp = new Date().toLocaleTimeString();
+    setDebugLogs(prev => [...prev.slice(-4), `[${timestamp}] ${message}`]);
+  }, []);
 
   const availableSprites = [
     { name: 'Cat', emoji: '🐱', color: 'from-orange-400 to-red-500' },
@@ -1418,31 +1481,31 @@ useEffect(() => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 text-gray-800 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 text-gray-800 p-3 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Header - Mobile Optimized */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative text-center mb-8"
+          className="relative text-center mb-4 sm:mb-8"
         >
           <div className="absolute top-0 right-0">
             <motion.button
               onClick={handleClearAll}
-              className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-6 py-3 rounded-2xl text-sm font-bold transition-all duration-300 shadow-lg"
+              className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              🗑️ Clear All
+              🗑️ <span className="hidden sm:inline">Clear All</span>
             </motion.button>
           </div>
           <motion.h1 
-            className="text-5xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4"
+            className="text-2xl sm:text-3xl lg:text-5xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 sm:mb-4 pr-16 sm:pr-0"
           >
             ✨ Scratch Clone - Hero Feature Edition ✨
           </motion.h1>
           <motion.p 
-            className="text-gray-600 text-xl font-medium mb-2"
+            className="text-gray-600 text-sm sm:text-lg lg:text-xl font-medium mb-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -1450,38 +1513,38 @@ useEffect(() => {
             🎨 Visual Programming with COLLISION-BASED ANIMATION SWAP
           </motion.p>
           <motion.div 
-            className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-xl font-bold text-sm inline-block shadow-lg"
+            className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm inline-block shadow-lg"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5 }}
           >
-            ⭐ HERO FEATURE: Complete Animation Swap on Collision! Stage = Half Screen Width
+            ⭐ HERO FEATURE: Complete Animation Swap on Collision! <span className="hidden sm:inline">Stage = Responsive</span>
           </motion.div>
         </motion.div>
 
-        {/* Sprite Library */}
+        {/* Sprite Library - Mobile Optimized */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-4 sm:mb-8"
         >
-          <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-3xl p-8 shadow-2xl">
+          <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
             <motion.h2 
-              className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3"
+              className="text-lg sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
               🎭 Sprite Library
-              <span className="text-sm font-normal bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+              <span className="text-xs sm:text-sm font-normal bg-blue-100 text-blue-700 px-2 sm:px-3 py-1 rounded-full">
                 {sprites.length} active
               </span>
             </motion.h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
               {/* Hero Feature Demo Button - Most Important */}
               <motion.button
                 onClick={heroFeatureDemo}
                 disabled={isPlaying}
-                className={`bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 hover:from-red-600 hover:via-pink-600 hover:to-purple-700 text-white p-6 rounded-3xl text-sm font-bold transition-all duration-300 flex flex-col items-center gap-3 shadow-2xl border-3 border-red-300 ${isPlaying ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 hover:from-red-600 hover:via-pink-600 hover:to-purple-700 text-white p-3 sm:p-6 rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-bold transition-all duration-300 flex flex-col items-center gap-2 sm:gap-3 shadow-2xl border-2 sm:border-3 border-red-300 ${isPlaying ? 'opacity-50 cursor-not-allowed' : ''}`}
                 whileHover={isPlaying ? {} : { scale: 1.05, y: -5 }}
                 whileTap={isPlaying ? {} : { scale: 0.95 }}
                 initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -1489,7 +1552,7 @@ useEffect(() => {
                 transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 20 }}
               >
                 <motion.div 
-                  className="text-4xl"
+                  className="text-2xl sm:text-4xl"
                   animate={isPlaying ? {} : { 
                     rotate: [0, 360]
                   }}
@@ -1501,8 +1564,8 @@ useEffect(() => {
                 >
                   💥
                 </motion.div>
-                <span>HERO FEATURE DEMO</span>
-                <span className="text-xs opacity-80">Challenge Example</span>
+                <span className="text-center leading-tight">HERO FEATURE DEMO</span>
+                <span className="text-xs opacity-80 hidden sm:block">Challenge Example</span>
               </motion.button>
 
               {/* Available sprites */}
@@ -1528,14 +1591,14 @@ useEffect(() => {
                             ? 'bg-gradient-to-r from-blue-500 to-purple-600 border-blue-400 text-white shadow-xl'
                             : 'bg-gradient-to-r from-gray-400 to-gray-500 border-gray-400 text-white'
                           : `bg-gradient-to-r ${spriteData.color} hover:shadow-xl border-gray-300 text-white hover:border-blue-400`
-                      } ${isPlaying ? 'opacity-50 cursor-not-allowed' : ''} border-3 p-6 rounded-3xl text-sm font-bold transition-all duration-300 flex flex-col items-center gap-3 shadow-lg w-full relative`}
+                      } ${isPlaying ? 'opacity-50 cursor-not-allowed' : ''} border-2 sm:border-3 p-3 sm:p-6 rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-bold transition-all duration-300 flex flex-col items-center gap-2 sm:gap-3 shadow-lg w-full relative`}
                       whileHover={isPlaying ? {} : { scale: 1.05, y: -5 }}
                       whileTap={isPlaying ? {} : { scale: 0.95 }}
                     >
-                      <div className="text-4xl filter drop-shadow-lg">
+                      <div className="text-2xl sm:text-4xl filter drop-shadow-lg">
                         {spriteData.emoji}
                       </div>
-                      <span className="font-bold">
+                      <span className="font-bold text-center leading-tight">
                         {isAlreadyAdded ? (isSelected ? '✨ Selected' : '✅ Added') : `+ ${spriteData.name}`}
                       </span>
                     </motion.button>
@@ -1552,7 +1615,7 @@ useEffect(() => {
                           }
                         }}
                         disabled={isPlaying}
-                        className="absolute -top-3 -right-3 w-9 h-9 bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white rounded-full text-lg flex items-center justify-center shadow-lg z-20 font-bold border-2 border-white"
+                        className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-6 h-6 sm:w-9 sm:h-9 bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white rounded-full text-sm sm:text-lg flex items-center justify-center shadow-lg z-20 font-bold border-2 border-white"
                         whileHover={isPlaying ? {} : { scale: 1.15, rotate: 90 }}
                         whileTap={isPlaying ? {} : { scale: 0.9 }}
                         initial={{ opacity: 0, scale: 0 }}
@@ -1569,45 +1632,45 @@ useEffect(() => {
           </div>
         </motion.div>
 
-        {/* Main Content - Stage takes half screen width */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* Main Content - Responsive Layout */}
+        <div className={`${isMobile ? 'space-y-4' : 'grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8'} mb-4 sm:mb-8`}>
           {/* Left Panel - Code Area */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: isMobile ? 0 : -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="space-y-6"
+            className="space-y-3 sm:space-y-6"
           >
             {/* Motion Blocks */}
-            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-3xl p-6 shadow-2xl">
+            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-2xl">
               <motion.h3 
-                className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-3"
+                className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 🏃‍♂️ Motion Blocks
               </motion.h3>
-              <div className="max-h-64 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-100">
+              <div className="max-h-48 sm:max-h-64 overflow-y-auto pr-1 sm:pr-2 scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-100">
                 <MotionBlocks isPlaying={isPlaying} />
               </div>
             </div>
 
             {/* Looks Blocks */}
-            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-3xl p-6 shadow-2xl">
+            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-2xl">
               <motion.h3 
-                className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-3"
+                className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 🎨 Looks Blocks
               </motion.h3>
-              <div className="max-h-64 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-purple-100">
+              <div className="max-h-48 sm:max-h-64 overflow-y-auto pr-1 sm:pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-purple-100">
                 <LooksBlocks isPlaying={isPlaying} />
               </div>
             </div>
 
             {/* Code Area */}
-            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-3xl p-8 shadow-2xl">
+            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
               <CodeArea
                 spriteActions={spriteActionQueues}
                 selectedSpriteId={selectedSpriteId}
@@ -1620,23 +1683,23 @@ useEffect(() => {
             </div>
           </motion.div>
 
-          {/* Right Panel - Stage & Controls (Half Screen Width) */}
+          {/* Right Panel - Stage & Controls */}
           <motion.div 
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: isMobile ? 0 : 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="space-y-6"
+            transition={{ delay: isMobile ? 0.2 : 0.4 }}
+            className="space-y-3 sm:space-y-6"
           >
-            {/* Stage - Half Screen Width */}
-            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-3xl p-6 shadow-2xl">
+            {/* Stage - Responsive */}
+            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-2xl">
               <motion.h3 
-                className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-3"
+                className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 🎪 Performance Stage
                 <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-normal">
-                  Half Screen Width
+                  Responsive
                 </span>
               </motion.h3>
               <div className="flex justify-center">
@@ -1652,9 +1715,9 @@ useEffect(() => {
             </div>
 
             {/* Controls */}
-            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-3xl p-6 shadow-2xl">
+            <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-2xl">
               <motion.h3 
-                className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-3"
+                className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
@@ -1676,16 +1739,16 @@ useEffect(() => {
           </motion.div>
         </div>
 
-        {/* Event Log */}
+        {/* Event Log - Mobile Optimized */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-3xl p-8 shadow-2xl">
-            <div className="flex items-center justify-between mb-6">
+          <div className="bg-white/70 backdrop-blur-md border-2 border-white/50 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3">
               <motion.h3 
-                className="text-2xl font-bold text-gray-800 flex items-center gap-3"
+                className="text-lg sm:text-2xl font-bold text-gray-800 flex items-center gap-2 sm:gap-3"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
               >
@@ -1696,15 +1759,15 @@ useEffect(() => {
               </motion.h3>
               <motion.button
                 onClick={() => setDebugLogs([])}
-                className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-4 py-2 rounded-2xl font-medium shadow-lg transition-all duration-300"
+                className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-3 sm:px-4 py-2 rounded-xl sm:rounded-2xl font-medium shadow-lg transition-all duration-300 text-xs sm:text-sm"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
                 🧹 Clear
               </motion.button>
             </div>
-            <div className="bg-gray-900 rounded-2xl p-6 border-2 border-gray-700 shadow-inner">
-              <div className="text-sm max-h-40 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+            <div className="bg-gray-900 rounded-xl sm:rounded-2xl p-3 sm:p-6 border-2 border-gray-700 shadow-inner">
+              <div className="text-xs sm:text-sm max-h-32 sm:max-h-40 overflow-y-auto space-y-2 sm:space-y-3 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
                 <AnimatePresence>
                   {debugLogs.length === 0 ? (
                     <motion.p 
@@ -1712,12 +1775,14 @@ useEffect(() => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     >
-                      <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                      System ready for HERO FEATURE demo! Click the red demo button to see collision-based animation swap! 🚀
-                      <br />
-                      <span className="text-yellow-400 ml-4">💥 CHALLENGE: When sprites collide, their complete animation sequences swap!</span>
-                      <br />
-                      <span className="text-cyan-400 ml-4">🎭 Stage = Half Screen Width with Strict Boundaries!</span>
+                      <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse flex-shrink-0"></span>
+                      <span className="text-xs sm:text-sm">
+                        System ready for HERO FEATURE demo! Click the red demo button to see collision-based animation swap! 🚀
+                        <br />
+                        <span className="text-yellow-400">💥 CHALLENGE: When sprites collide, their complete animation sequences swap!</span>
+                        <br />
+                        <span className="text-cyan-400">🎭 Stage = Responsive with Strict Boundaries!</span>
+                      </span>
                     </motion.p>
                   ) : (
                     debugLogs.map((log, index) => (
@@ -1726,10 +1791,10 @@ useEffect(() => {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        className="text-cyan-300 bg-gray-800/50 p-3 rounded-xl font-mono text-xs border border-cyan-500/20 shadow-lg flex items-center gap-2"
+                        className="text-cyan-300 bg-gray-800/50 p-2 sm:p-3 rounded-lg sm:rounded-xl font-mono text-xs border border-cyan-500/20 shadow-lg flex items-start gap-2"
                       >
-                        <span className="w-2 h-2 bg-cyan-400 rounded-full flex-shrink-0"></span>
-                        <span>{log}</span>
+                        <span className="w-2 h-2 bg-cyan-400 rounded-full flex-shrink-0 mt-1"></span>
+                        <span className="break-words">{log}</span>
                       </motion.div>
                     ))
                   )}
