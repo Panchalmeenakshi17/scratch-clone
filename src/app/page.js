@@ -1078,72 +1078,146 @@ function ScratchCloneMain() {
     { name: 'Fox', emoji: '🦊', color: 'from-orange-400 to-red-500' }
   ];
 
-  // HERO FEATURE: Enhanced collision handler that swaps COMPLETE animation sequences
-  const handleCollision = useCallback((sprite1Id, sprite2Id) => {
-    const sprite1 = sprites.find(s => s.id === sprite1Id);
-    const sprite2 = sprites.find(s => s.id === sprite2Id);
-    const sprite1Name = sprite1?.name || `Sprite${sprite1Id}`;
-    const sprite2Name = sprite2?.name || `Sprite${sprite2Id}`;
+// HERO FEATURE: Enhanced collision handler that swaps COMPLETE animation sequences
+const [collisionCooldowns, setCollisionCooldowns] = useState(new Set());
 
-    addDebugLog(`💥 COLLISION DETECTED! ${sprite1Name} ↔ ${sprite2Name}`);
-    addDebugLog(`🎭 HERO FEATURE ACTIVATED: Complete Animation Swap!`);
+const handleCollision = useCallback((sprite1Id, sprite2Id) => {
+  // Create unique collision pair key (order doesn't matter)
+  const collisionKey = [sprite1Id, sprite2Id].sort().join('-');
+  
+  // Check if this collision pair is on cooldown
+  if (collisionCooldowns.has(collisionKey)) {
+    return; // Skip if already processed recently
+  }
 
-    // Get the complete animation sequences
-    const sprite1CompleteActions = [...(spriteActionQueues[sprite1Id] || [])];
-    const sprite2CompleteActions = [...(spriteActionQueues[sprite2Id] || [])];
+  // Get fresh references to sprites and their queues
+  const sprite1 = sprites.find(s => s.id === sprite1Id);
+  const sprite2 = sprites.find(s => s.id === sprite2Id);
+  
+  if (!sprite1 || !sprite2) {
+    console.warn('Collision detected but sprites not found:', sprite1Id, sprite2Id);
+    return;
+  }
+
+  const sprite1Name = sprite1.name || `Sprite${sprite1Id}`;
+  const sprite2Name = sprite2.name || `Sprite${sprite2Id}`;
+
+  // Add collision pair to cooldown set
+  setCollisionCooldowns(prev => new Set([...prev, collisionKey]));
+
+  addDebugLog(`💥 COLLISION DETECTED! ${sprite1Name} ↔ ${sprite2Name}`);
+  addDebugLog(`🎭 HERO FEATURE ACTIVATED: Complete Animation Swap!`);
+  addDebugLog(`🔒 Collision cooldown activated for pair: ${collisionKey}`);
+
+  // Get the CURRENT complete animation sequences at the time of collision
+  setSpriteActionQueues(prev => {
+    const sprite1CompleteActions = [...(prev[sprite1Id] || [])];
+    const sprite2CompleteActions = [...(prev[sprite2Id] || [])];
     
-    // HERO FEATURE: Swap the COMPLETE animation sequences between sprites
-    setSpriteActionQueues(prev => {
-      addDebugLog(`✨ ${sprite1Name} now has ALL of ${sprite2Name}'s animations`);
-      addDebugLog(`✨ ${sprite2Name} now has ALL of ${sprite1Name}'s animations`);
-      
-      return {
-        ...prev,
-        [sprite1Id]: sprite2CompleteActions,  // Complete swap
-        [sprite2Id]: sprite1CompleteActions   // Complete swap
-      };
-    });
+    addDebugLog(`📝 ${sprite1Name} had ${sprite1CompleteActions.length} actions`);
+    addDebugLog(`📝 ${sprite2Name} had ${sprite2CompleteActions.length} actions`);
+    addDebugLog(`✨ ${sprite1Name} now gets ALL of ${sprite2Name}'s animations`);
+    addDebugLog(`✨ ${sprite2Name} now gets ALL of ${sprite1Name}'s animations`);
+    
+    return {
+      ...prev,
+      [sprite1Id]: sprite2CompleteActions,  // Complete swap
+      [sprite2Id]: sprite1CompleteActions   // Complete swap
+    };
+  });
 
-    // Visual feedback for collision (fixed single keyframe)
-    setSprites(prevSprites => 
+  // Immediately mark sprites as collided to prevent re-processing
+  setSprites(prevSprites =>
+    prevSprites.map(sprite => {
+      if (sprite.id === sprite1Id) {
+        return {
+          ...sprite,
+          hasCollided: true,
+          speech: `I swapped animations with ${sprite2Name}! 🎭`,
+          speechType: 'say'
+        };
+      }
+      if (sprite.id === sprite2Id) {
+        return {
+          ...sprite,
+          hasCollided: true,
+          speech: `I swapped animations with ${sprite1Name}! 🎭`,
+          speechType: 'say'
+        };
+      }
+      return sprite;
+    })
+  );
+
+  // Reset collision state and speech after delay + Remove from cooldown
+  setTimeout(() => {
+    setSprites(prevSprites =>
       prevSprites.map(sprite => {
-        if (sprite.id === sprite1Id) {
+        if (sprite.id === sprite1Id || sprite.id === sprite2Id) {
           return {
             ...sprite,
-            hasCollided: true,
-            speech: `I swapped animations with ${sprite2Name}! 🎭`,
-            speechType: 'say'
-          };
-        }
-        if (sprite.id === sprite2Id) {
-          return {
-            ...sprite,
-            hasCollided: true,
-            speech: `I swapped animations with ${sprite1Name}! 🎭`,
-            speechType: 'say'
+            hasCollided: false,
+            speech: '',
+            speechType: ''
           };
         }
         return sprite;
       })
     );
-
-    // Reset collision state and speech after delay
+    
+    // Remove collision pair from cooldown after 5 seconds
     setTimeout(() => {
-      setSprites(prevSprites => 
-        prevSprites.map(sprite => {
-          if (sprite.id === sprite1Id || sprite.id === sprite2Id) {
-            return {
-              ...sprite,
-              hasCollided: false,
-              speech: '',
-              speechType: ''
-            };
-          }
-          return sprite;
-        })
+      setCollisionCooldowns(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(collisionKey);
+        addDebugLog(`🔓 Collision cooldown removed for pair: ${collisionKey}`);
+        return newSet;
+      });
+    }, 2000); // Additional 2 seconds before allowing new collision
+    
+  }, 3000);
+
+}, [sprites, addDebugLog, collisionCooldowns]); // Added collisionCooldowns dependency
+
+// ADDITIONAL: Enhanced collision detection with better timing and cooldown check
+const detectCollisions = useCallback(() => {
+  for (let i = 0; i < sprites.length; i++) {
+    for (let j = i + 1; j < sprites.length; j++) {
+      const sprite1 = sprites[i];
+      const sprite2 = sprites[j];
+      
+      // Create collision pair key for cooldown check
+      const collisionKey = [sprite1.id, sprite2.id].sort().join('-');
+      
+      // Skip if this collision pair is on cooldown
+      if (collisionCooldowns.has(collisionKey)) continue;
+      
+      // Skip if either sprite is already in collision state
+      if (sprite1.hasCollided || sprite2.hasCollided) continue;
+      
+      const distance = Math.sqrt(
+        Math.pow(sprite1.x - sprite2.x, 2) + Math.pow(sprite1.y - sprite2.y, 2)
       );
-    }, 3000);
-  }, [sprites, spriteActionQueues, addDebugLog]);
+      
+      // Collision threshold (adjust as needed)
+      const collisionThreshold = 60;
+      
+      if (distance < collisionThreshold) {
+        addDebugLog(`🎯 New collision detected: ${sprite1.name || sprite1.id} ↔ ${sprite2.name || sprite2.id}`);
+        handleCollision(sprite1.id, sprite2.id);
+        return; // Only handle one collision per frame
+      }
+    }
+  }
+}, [sprites, handleCollision, collisionCooldowns, addDebugLog]);
+
+// DEBUGGING: Add this function to check queue states
+const debugSpriteQueues = useCallback(() => {
+  sprites.forEach(sprite => {
+    const queueLength = spriteActionQueues[sprite.id]?.length || 0;
+    console.log(`${sprite.name || sprite.id}: ${queueLength} actions in queue`);
+  });
+}, [sprites, spriteActionQueues]);
 
   useCollisionDetection(sprites, handleCollision);
 
