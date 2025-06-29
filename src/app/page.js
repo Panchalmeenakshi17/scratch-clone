@@ -356,7 +356,7 @@ const AnimalNamePopup = ({ isOpen, onClose, onConfirm, randomAnimal, screenSize 
             value={animalName}
             onChange={(e) => setAnimalName(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={`My ${randomAnimal.type}'s name is...`}
+            placeholder={`My ${randomAnimal.type}&apos;s name is...`}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl text-center font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             autoFocus
             maxLength={20}
@@ -710,7 +710,7 @@ const CodeArea = ({ spriteActions, selectedSpriteId, sprites, onAddAction, onRem
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          {selectedSprite?.name}'s Actions
+          {selectedSprite?.name}&apos;s Actions
           {autoExecute && (
             <span className={`${screenSize.isMobile ? 'text-xs' : 'text-sm'} ml-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-lg font-normal`}>
               🤖 AUTO
@@ -916,7 +916,7 @@ const Sprite = ({ sprite, isSelected, onSelect, onMove, onRemove, stageWidth, st
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [stageRect, setStageRect] = useState(null);
 
-  const handleStart = (e, clientX, clientY) => {
+  const handleStart = useCallback((e, clientX, clientY) => {
     e.preventDefault();
     e.stopPropagation();
     
@@ -936,41 +936,41 @@ const Sprite = ({ sprite, isSelected, onSelect, onMove, onRemove, stageWidth, st
     
     setIsDragging(true);
     onSelect(sprite.id);
-  };
+  }, [sprite.x, sprite.y, onSelect]);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = useCallback((e) => {
     handleStart(e, e.clientX, e.clientY);
-  };
+  }, [handleStart]);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = useCallback((e) => {
     if (e.touches[0]) {
       handleStart(e, e.touches[0].clientX, e.touches[0].clientY);
     }
-  };
+  }, [handleStart]);
 
-  const handleMove = (clientX, clientY) => {
+  const handleMove = useCallback((clientX, clientY) => {
     if (!isDragging || !stageRect) return;
     
     const x = Math.max(25, Math.min(stageWidth - 25, clientX - stageRect.left - dragStart.x));
     const y = Math.max(25, Math.min(stageHeight - 25, clientY - stageRect.top - dragStart.y));
     onMove(sprite.id, x, y);
-  };
+  }, [isDragging, stageRect, stageWidth, stageHeight, dragStart, onMove, sprite.id]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     handleMove(e.clientX, e.clientY);
-  };
+  }, [handleMove]);
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = useCallback((e) => {
     if (e.touches[0]) {
       e.preventDefault();
       handleMove(e.touches[0].clientX, e.touches[0].clientY);
     }
-  };
+  }, [handleMove]);
 
-  const handleEnd = () => {
+  const handleEnd = useCallback(() => {
     setIsDragging(false);
     setStageRect(null);
-  };
+  }, []);
 
   useEffect(() => {
     if (isDragging) {
@@ -985,7 +985,7 @@ const Sprite = ({ sprite, isSelected, onSelect, onMove, onRemove, stageWidth, st
         document.removeEventListener('touchend', handleEnd);
       };
     }
-  }, [isDragging, stageRect, dragStart]);
+  }, [isDragging, handleMouseMove, handleTouchMove, handleEnd]);
 
   const spriteSize = screenSize.isMobile ? 16 : 25;
 
@@ -1160,7 +1160,7 @@ const PlaybackControls = ({
           ⭐ MAGICAL COLLISION SWAPS
         </div>
         <div className={`text-orange-600 ${screenSize.isMobile ? 'text-xs' : 'text-xs'}`}>
-          When two friends bump into each other, they magically swap all their actions! It's like they're trading their to-do lists!
+          When two friends bump into each other, they magically swap all their actions! It&apos;s like they&apos;re trading their to-do lists!
         </div>
       </motion.div>
 
@@ -1371,7 +1371,7 @@ function ScratchCloneMain() {
     setCollisionCooldowns(prev => new Set([...prev, collisionKey]));
 
     addDebugLog(`💥 BUMP! ${sprite1Name} and ${sprite2Name} collided!`);
-    addDebugLog(`🎭 MAGICAL SWAP! They're trading action lists!`);
+    addDebugLog(`🎭 MAGICAL SWAP! They&apos;re trading action lists!`);
 
     setSpriteActionQueues(prev => {
       const sprite1Actions = [...(prev[sprite1Id] || [])];
@@ -1394,7 +1394,7 @@ function ScratchCloneMain() {
           return {
             ...sprite,
             hasCollided: true,
-            speech: `Got ${sprite2Name}'s moves! ✨`,
+            speech: `Got ${sprite2Name}&apos;s moves! ✨`,
             speechType: 'say'
           };
         }
@@ -1402,7 +1402,7 @@ function ScratchCloneMain() {
           return {
             ...sprite,
             hasCollided: true,
-            speech: `Got ${sprite1Name}'s moves! ✨`,
+            speech: `Got ${sprite1Name}&apos;s moves! ✨`,
             speechType: 'say'
           };
         }
@@ -2334,7 +2334,6 @@ function ScratchCloneMain() {
 }
 
 export default ScratchCloneMain;
-
 
 
 
